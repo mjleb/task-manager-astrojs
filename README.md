@@ -1,7 +1,6 @@
 # Task Manager
 
-![Project Status](https://img.shields.io/badge/status-in%20development-orange)  ![Frontend](https://img.shields.io/badge/frontend-CamelCase%2C%20Typescript%2C%20yarn%2C%20Astro%2C%20Svelte%2C%20Tailwind%20CSS-blueviolet) ![Backend](https://img.shields.io/badge/backend-CamelCase%2C%20Typescript%2C%20yarn%2C%20Astro%20Server%20Actions%2C%20Prisma%20%2B%20SQLite%2C%20Node.js-lightgreen) ![Database](https://img.shields.io/badge/database-SQLite-brightgreen) ![Testing](https://img.shields.io/badge/testing-Jest-yellow) ![Validation](https://img.shields.io/badge/validation-Zod-yellowgreen)
-
+![Project Status](https://img.shields.io/badge/status-in%20development-orange) ![Frontend](https://img.shields.io/badge/frontend-CamelCase%2C%20Typescript%2C%20yarn%2C%20Astro%2C%20Svelte%2C%20Tailwind%20CSS-blueviolet) ![Backend](https://img.shields.io/badge/backend-CamelCase%2C%20Typescript%2C%20yarn%2C%20Astro%20Server%20Actions%2C%20Prisma%20%2B%20SQLite%2C%20Node.js-lightgreen) ![Database](https://img.shields.io/badge/database-SQLite-brightgreen) ![Testing](https://img.shields.io/badge/testing-Jest-yellow) ![Validation](https://img.shields.io/badge/validation-Zod-yellowgreen)
 
 ## Project Overview
 
@@ -29,7 +28,6 @@ This project is currently under active development. Features may change and func
 - **Tailwind CSS**: Utility-first CSS framework for component styling.
 - **Jest**: Testing framework for server actions.
 
-
 ## Installation and Usage
 
 ### Installation
@@ -38,6 +36,15 @@ To install the project dependencies, run the following command:
 
 ```bash
 yarn install
+```
+
+### Set Up the Database
+
+Initialize Prisma and apply the database schema migration:
+
+```bash
+npx prisma migrate dev --name init
+npx prisma generate
 ```
 
 ### Development Server
@@ -76,11 +83,10 @@ yarn test
 
 ## Author
 
- **Marina Lebedeva**
+**Marina Lebedeva**
 
 - GitHub: [github.com/mjleb](https://github.com/mjleb)
 - Email: [marina@mj-dev.org]
-
 
 ## License
 
