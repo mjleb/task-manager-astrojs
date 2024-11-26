@@ -29,6 +29,51 @@ This project is currently under active development. Features may change and func
 - **Tailwind CSS**: Utility-first CSS framework for component styling.
 - **Jest**: Testing framework for server actions.
 
+
+## Installation and Usage
+
+### Installation
+
+To install the project dependencies, run the following command:
+
+```bash
+yarn install
+```
+
+### Development Server
+
+To start the development server, run:
+
+```bash
+yarn dev
+```
+
+The development server will start on [http://localhost:4321/](http://localhost:4321/).
+
+### Build for Production
+
+To create a production build, run:
+
+```bash
+yarn build
+```
+
+### Preview Production Build
+
+To preview the production build locally, run:
+
+```bash
+yarn preview
+```
+
+## Testing
+
+Run the tests with the following command:
+
+```bash
+yarn test
+```
+
 ## Author
 
  **Marina Lebedeva**
