@@ -1,0 +1,41 @@
+{
+  "name": "task-manager-astrojs",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@prisma/client": "^5.22.0",
+    "astro": "^4.16.15",
+    "prisma": "^5.22.0",
+    "sqlite3": "^5.1.7",
+    "typescript": "^5.7.2",
+    "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "@astrojs/svelte": "^6.0.2",
+    "@astrojs/tailwind": "^5.1.2",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.0",
+    "eslint": "^9.15.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.12.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.4.0",
+    "prettier-plugin-astro": "^0.14.1",
+    "svelte": "^5.1.16",
+    "tailwindcss": "^3.0.24",
+    "ts-jest": "^29.2.5",
+    "typescript-eslint": "^8.16.0"
+  }
+}
