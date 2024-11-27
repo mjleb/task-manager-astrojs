@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 //import { v4 as uuidv4 } from 'uuid';
 import { defineAction } from 'astro:actions';
-import type { TTask } from '../utils/types';
 
 const prisma = new PrismaClient();
 
@@ -13,7 +12,16 @@ const taskSchema = z.object({
   description: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high']),
   dueDate: z.string().optional(), // Строка, которая позже преобразуется в дату
-  status: z.enum(['new', 'in-progress', 'completed']).default('new'),
+  status: z.enum(['active', 'completed']).default('active'),
+});
+
+const taskUpdateSchema = z.object({
+  id: z.string(),
+  title: z.string().min(1, 'Название задачи не может быть пустым'),
+  description: z.string().optional(),
+  priority: z.enum(['low', 'medium', 'high']),
+  dueDate: z.string().optional(), // Строка, которая позже преобразуется в дату
+  status: z.enum(['active', 'completed']).default('active'),
 });
 
 export const getTasks = defineAction({
@@ -52,5 +60,23 @@ export const getTaskById = defineAction({
       where: { id: input.id },
     });
     return task;
+  },
+});
+
+export const updateTaskById = defineAction({
+  accept: 'form',
+  input: taskUpdateSchema,
+  handler: async (input) => {
+    const updatedTask = await prisma.task.update({
+      where: { id: input.id },
+      data: {
+        title: input.title || undefined,
+        description: input.description || undefined,
+        priority: input.priority || undefined,
+        status: input.status || undefined,
+      },
+    });
+
+    return updatedTask;
   },
 });

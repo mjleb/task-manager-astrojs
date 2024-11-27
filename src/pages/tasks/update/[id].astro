@@ -1,0 +1,102 @@
+---
+import { actions } from 'astro:actions';
+import Layout from '../../../layouts/Layout.astro';
+
+
+const { id} = Astro.params;
+const { data, error } = await Astro.callAction(actions.getTaskById,{id});
+const result = Astro.getActionResult(actions.updateTaskById);
+
+---
+<Layout title="Редактирование задачи">
+{result?.error && (
+  <p class="error">Не удалось обновить задачу. Попробуйте позже.</p>
+)}
+{result && !result.error && (
+  <div>Задача успешно обновлена: {result?.data.id} - {result?.data.title}</div>
+)}
+<form 
+  class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md" 
+  method="POST" 
+  action={actions.updateTaskById}
+>
+  <h1 class="text-2xl font-bold text-center mb-6">Редактирование задачи</h1>
+
+  <!-- ID задачи (скрытое поле) -->
+  <input type="hidden" name="id" value={id} />
+
+  <div class="mb-4">
+    <label for="title" class="block text-sm font-medium text-gray-700">Название задачи</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      class="form__input"
+      value={data?.title || ''}
+      required
+    />
+  </div>
+
+  <div class="mb-4">
+    <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
+    <textarea
+      id="description"
+      name="description"
+      rows="3"
+      class="form__input"
+    >{data?.description || ''}</textarea>
+  </div>
+
+  <div class="mb-4">
+    <label for="priority" class="block text-sm font-medium text-gray-700">Приоритет</label>
+    <select
+      id="priority"
+      name="priority"
+      class="form__input"
+      required
+    >
+      <option value="low" selected={data?.priority === 'low'}>Низкий</option>
+      <option value="medium" selected={data?.priority === 'medium'}>Средний</option>
+      <option value="high" selected={data?.priority === 'high'}>Высокий</option>
+    </select>
+  </div>
+{/*
+  <div class="mb-4">
+    <label for="dueDate" class="block text-sm font-medium text-gray-700">Дата выполнения</label> : {data?.dueDate}
+    <input
+      type="date"
+      id="dueDate"
+      name="dueDate"
+      class="form__input"
+      value={data?.dueDate ? new Date(data?.dueDate).toISOString().substring(0, 10) : ''}
+    />
+  </div>
+*/} 
+  <div class="mb-4">
+    <label for="status" class="block text-sm font-medium text-gray-700">Статус</label>
+    <select
+      id="status"
+      name="status"
+      class="form__input"
+      required
+    >
+      <option value="active" selected={data?.status === 'active'}>Активна</option>
+
+      <option value="completed" selected={data?.status === 'completed'}>Завершена</option>
+    </select>
+  </div>
+
+  <button
+    type="submit"
+    class="w-full px-4 py-2 bg-green-600 text-white font-bold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+  >
+    Сохранить изменения
+  </button>
+</form>
+</Layout>
+
+<style>
+    .form__input {
+        @apply mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+    }
+</style>
