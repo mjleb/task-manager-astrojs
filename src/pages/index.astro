@@ -1,10 +1,64 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { actions } from "astro:actions";
+ 
+const { data, error } = await Astro.callAction(actions.getTasks,{});
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Tasks List">
   <main>
-    <h1>Task Manager</h1>
+    <div class="max-w-4xl mx-auto py-8">
+      <h1>Task Manager</h1>
+      <div>{error}</div>
+      <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+        {data?.map((task, index) => (
+          <div
+            key={index}
+            class="p-4 bg-white rounded-lg shadow-md border border-gray-200"
+          >
+            <h2 class="text-lg font-semibold mb-2">{task.title} </h2>
+            <p class="text__sm">
+              <span class="font-semibold">Описание:</span>{" "}
+              {task.description || "Нет описания"}
+            </p>
+            
+            <p class="text__sm">
+              <span class="font-semibold">Приоритет:</span>{" "}
+              <span
+                class={`${
+                  task.priority === "high"
+                    ? "text-red-500"
+                    : task.priority === "medium"
+                    ? "text-yellow-500"
+                    : "text-green-500"
+                } font-bold`}
+              >
+                {task.priority}
+              </span>
+            </p>
+            <p class="text__sm">
+              <span class="font-semibold">Статус:</span>{" "}
+              <span
+                class={`${
+                  task.status === "new"
+                    ? "text-blue-500"
+                    : task.status === "in-progress"
+                    ? "text-yellow-500"
+                    : "text-green-500"
+                } font-bold`}
+              >
+                {task.status}
+              </span>
+            </p>
+            <p class="text__sm">
+              <span class="font-semibold">Срок выполнения:</span>{" "}
+              {task.dueDate ? task.dueDate.toLocaleDateString() : "Не указан"}
+            </p>
+            <p class="text__sm"><span class="font-semibold">id:</span> {task.id}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </main>
 </Layout>
 
@@ -26,4 +80,7 @@ import Layout from '../layouts/Layout.astro';
     text-align: center;
     margin-bottom: 1em;
   }
+  .text__sm {
+        @apply text-sm text-gray-700;
+    }
 </style>
