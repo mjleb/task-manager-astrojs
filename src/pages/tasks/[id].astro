@@ -1,0 +1,59 @@
+---
+import { actions } from 'astro:actions';
+import Layout from "../../layouts/Layout.astro";
+
+const {  id } = Astro.params;
+const { data, error } = await Astro.callAction(actions.getTaskById,{id});
+/*
+if (!itemExists(id)) {
+  return Astro.rewrite("/404")
+}
+  */
+     // Функция для форматирования даты
+const formatDate = (date: Date | null | undefined) =>
+  date ? new Intl.DateTimeFormat('default', { dateStyle: 'medium' }).format(new Date(date)) : 'N/A';
+
+const priorityColors: { [key: string]: string }  = {
+  low: '  text-green-800',
+  medium: '  text-yellow-800',
+  high: '  text-red-800',
+};
+
+const statusColors : { [key: string]: string } = {
+  new: 'text-blue-600',
+  'in-progress': 'text-yellow-600',
+  completed: 'text-green-600',
+};
+
+---
+<Layout title={`Task id:${id}`} >
+
+ <div class="max-w-lg mx-auto bg-white   rounded-lg shadow-md">
+    <div class="p-4 border border-gray-300 rounded-lg shadow-md bg-white"> 
+    <h1> Задача: {id}</h1>
+    {error && (
+        <p class="error">{error}</p>
+      )}
+{data && (
+
+  <h2 class="text-lg font-bold mb-2">{data?.title}</h2>
+  <p class="text-sm text-gray-600 mb-4">{data?.description || 'Нет описания'}</p>
+  
+  <div class="flex items-center justify-between mb-2">
+
+  </div>
+
+  <div class="text-sm text-gray-500">
+    <p class={`text-sm font-medium  ${priorityColors[data.priority]}`}>
+      Приоритет: {data?.priority}
+    </p>
+    <p class={`text-sm font-medium ${statusColors[data.status]}`}>
+      Статус: {data?.status}
+    </p>
+    <p><strong>Срок:</strong> {formatDate(data?.dueDate)}</p>
+    <p><strong>Создано:</strong> {formatDate(data?.createdAt)}</p>
+    <p><strong>Обновлено:</strong> {formatDate(data?.updatedAt)}</p>
+  </div>
+
+)}</div></div>
+</Layout>

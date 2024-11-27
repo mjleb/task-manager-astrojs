@@ -42,3 +42,15 @@ export const createTask = defineAction({
     return newTask;
   },
 });
+
+export const getTaskById = defineAction({
+  input: z.object({
+    id: z.string(),
+  }),
+  handler: async (input) => {
+    const task = await prisma.task.findUnique({
+      where: { id: input.id },
+    });
+    return task;
+  },
+});

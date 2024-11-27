@@ -16,14 +16,14 @@ const { data, error } = await Astro.callAction(actions.getTasks,{});
             key={index}
             class="p-4 bg-white rounded-lg shadow-md border border-gray-200"
           >
-            <h2 class="text-lg font-semibold mb-2">{task.title} </h2>
+            <a href={`/tasks/${task.id}`} ><h2 class="text-lg font-semibold mb-2">{task.title} </h2></a>
             <p class="text__sm">
-              <span class="font-semibold">Описание:</span>{" "}
+              <span class="font-semibold">Описание:</span>
               {task.description || "Нет описания"}
             </p>
             
             <p class="text__sm">
-              <span class="font-semibold">Приоритет:</span>{" "}
+              <span class="font-semibold">Приоритет:</span>
               <span
                 class={`${
                   task.priority === "high"
@@ -37,7 +37,7 @@ const { data, error } = await Astro.callAction(actions.getTasks,{});
               </span>
             </p>
             <p class="text__sm">
-              <span class="font-semibold">Статус:</span>{" "}
+              <span class="font-semibold">Статус:</span>
               <span
                 class={`${
                   task.status === "new"
@@ -51,7 +51,7 @@ const { data, error } = await Astro.callAction(actions.getTasks,{});
               </span>
             </p>
             <p class="text__sm">
-              <span class="font-semibold">Срок выполнения:</span>{" "}
+              <span class="font-semibold">Срок выполнения:</span>
               {task.dueDate ? task.dueDate.toLocaleDateString() : "Не указан"}
             </p>
             <p class="text__sm"><span class="font-semibold">id:</span> {task.id}</p>
