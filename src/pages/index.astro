@@ -2,14 +2,37 @@
 import Layout from '../layouts/Layout.astro';
 import { actions } from "astro:actions";
 import TaskList from '../components/tasks/TaskList.svelte';
+import { v4 as uuidv4 } from 'uuid';
+
+  let userCookie = Astro.cookies.get('userId');
+  let userId = userCookie ? userCookie.value : undefined;
+
+  if (!userId) {
+    // Если userId не существует, генерируем новый
+    userId = uuidv4();
+    
+    // Устанавливаем куку userId на 1 год
+    Astro.cookies.set('userId', userId, {
+      path: '/',
+      httpOnly: false,   // Кука доступна JavaScript на клиенте
+      secure: true,      // Кука будет передаваться только через HTTPS
+      maxAge: 60 * 60 * 24 * 365 // Срок действия - 1 год
+    });
+
+    console.log('Generated new userId and saved to cookies:', userId);
+  }
+
 
 const { data, error } = await Astro.callAction(actions.getTasks,{});
 ---
 
+
 <Layout title="Tasks List">
+ 
   <main>
     <div class="max-w-4xl mx-auto py-8">
       <h1>Task Manager</h1>
+      <div><b>userId</b>: {userId}</div>
       <div>{error}</div>
       <div class="flex w-full justify-end mt-3"><a href={`/tasks/new`} class="btn btn-green mb-3   text-center" > + Добавить </a></div>
       

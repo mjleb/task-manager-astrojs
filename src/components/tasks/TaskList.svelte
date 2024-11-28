@@ -90,6 +90,7 @@
               {task.dueDate ? task.dueDate.toLocaleDateString() : "Не указана"}
             </p>
             <p class="text__sm"><span class="font-semibold">id:</span> {task.id}</p>
+            <p class="text__sm"><span class="font-semibold">userId:</span> {task.userId}</p>
             <div class="flex w-full justify-between mt-3">
               <ButtonDelete id={task.id}  on:delete={handleDelete} />
                <a class="  btn btn-green" 

@@ -1,17 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
 //import { v4 as uuidv4 } from 'uuid';
-import { defineAction } from 'astro:actions';
+import { defineAction, ActionError } from 'astro:actions';
 
 const prisma = new PrismaClient();
 
 // Определяем схему данных для валидации
 const taskSchema = z.object({
-  userId: z.string(),
   title: z.string().min(1, 'Название задачи не может быть пустым'),
   description: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high']),
-  dueDate: z.string().optional(), // Строка, которая позже преобразуется в дату
+  dueDate: z.string().optional(),
   status: z.enum(['active', 'completed']).default('active'),
 });
 
@@ -20,30 +19,50 @@ const taskUpdateSchema = z.object({
   title: z.string().min(1, 'Название задачи не может быть пустым'),
   description: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high']),
-  dueDate: z.string().optional(), // Строка, которая позже преобразуется в дату
+  dueDate: z.string().optional(),
   status: z.enum(['active', 'completed']).default('active'),
 });
 
 export const getTasks = defineAction({
-  handler: async () => {
-    const post = await prisma.task.findMany();
-    return post;
+  handler: async (input, { cookies }) => {
+    // Чтение userId из cookies
+    const userCookie = cookies.get('userId');
+    const userId = userCookie ? userCookie.value : null;
+
+    if (!userId) {
+      throw new Error('Не удалось получить задачи, так как идентификатор пользователя не найден в куках.');
+    }
+
+    // Получение задач только для конкретного пользователя
+    const tasks = await prisma.task.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+
+    return tasks;
   },
 });
 
 export const createTask = defineAction({
   accept: 'form',
   input: taskSchema,
-  handler: async (input) => {
+  handler: async (input, { cookies }) => {
+    // Чтение userId из cookies
+    const userCookie = cookies.get('userId');
+    const userId = userCookie ? userCookie.value : null;
+
+    if (!userId) {
+      throw new Error('Не удалось создать задачу, так как идентификатор пользователя не найден в куках.');
+    }
     // Создаем новую запись в базе данных
     const newTask = await prisma.task.create({
       data: {
-        userId: input.userId,
+        userId: userId,
         title: input.title,
         description: input.description || null, // Если описание не задано, устанавливаем null
         priority: input.priority,
         dueDate: input.dueDate ? new Date(input.dueDate) : null, // Преобразуем строку в дату, если передано
-        status: input.status,
       },
     });
 
