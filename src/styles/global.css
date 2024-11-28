@@ -1,0 +1,20 @@
+main {
+  @apply mx-auto p-4 w-[800px] max-w-[calc(100%-2rem)] text-black text-[20px] leading-[1.6];
+}
+h1 {
+  @apply text-4xl font-bold leading-none text-center mb-4;
+}
+h2 {
+  @apply text-lg font-semibold mb-2;
+}
+.btn {
+  @apply flex items-center space-x-2 gap-2 px-4 py-2 text-xs font-medium   w-auto  rounded-full shadow  transition;
+}
+
+.btn-green {
+  @apply bg-green-100 text-green-800 hover:bg-green-200;
+}
+
+.btn-red {
+  @apply bg-red-100 text-red-800 hover:bg-red-200;
+}

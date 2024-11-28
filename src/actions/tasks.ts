@@ -80,3 +80,16 @@ export const updateTaskById = defineAction({
     return updatedTask;
   },
 });
+
+export const deleteTaskById = defineAction({
+  input: z.object({
+    id: z.string(),
+  }),
+  handler: async (input) => {
+    console.log('deleteTaskById', input.id);
+    const deletedTask = await prisma.task.delete({
+      where: { id: input.id },
+    });
+    return { success: true, data: deletedTask };
+  },
+});
