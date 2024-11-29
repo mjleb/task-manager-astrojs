@@ -19,6 +19,12 @@ This project is currently under active development. Features may change and func
 3. **Update Task**: Update task information by its unique identifier.
 4. **Delete Task**: Delete a task by its unique identifier.
 
+### User Identification
+
+- On the user's first visit to the application, the system checks for the presence of a userId in the cookies.
+- If no userId is found, a new unique identifier is generated using the uuid library.
+- The userId is used to retrieve and display tasks that belong to the specific user.
+
 ## Technologies
 
 - **Astro**: Framework for building static websites with server actions support.

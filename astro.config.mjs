@@ -6,5 +6,7 @@ import svelte from '@astrojs/svelte';
 
 
 export default defineConfig({
+    output: "server",
     integrations: [tailwind(), svelte()],
+
 });

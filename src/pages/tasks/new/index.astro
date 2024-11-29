@@ -1,0 +1,79 @@
+---
+import { actions } from 'astro:actions';
+import Layout from '../../../layouts/Layout.astro';
+ 
+
+const result = Astro.getActionResult(actions.createTask);
+
+ 
+---
+<Layout title="Welcome to Astro.">
+{result?.error && (
+  <p class="error">Unable to sign up. Please try again later.</p>
+)}
+<div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+<h1 class="text-2xl font-bold text-center mb-6">Создание задачи</h1>
+{result && !result.error &&  (<div class="text-green-700">Задача успешно добавлена <br />id: {result?.data.id} {result?.data.title}</div>)}
+<form   method="POST"  action={actions.createTask}>
+    <div class="mb-4">
+      <label for="title" class="block text-sm font-medium text-gray-700">Название задачи</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form__input"
+        required
+      />
+    </div>
+  
+    <div class="mb-4">
+      <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="3"
+        class="form__input"
+      ></textarea>
+    </div>
+  
+    <div class="mb-4">
+      <label for="priority" class="block text-sm font-medium text-gray-700">Приоритет</label>
+      <select
+        id="priority"
+        name="priority"
+        class="form__input"
+        required
+      >
+        <option value="low">Низкий</option>
+        <option value="medium">Средний</option>
+        <option value="high">Высокий</option>
+      </select>
+    </div>
+  
+    <div class="mb-4">
+      <label for="dueDate" class="block text-sm font-medium text-gray-700">Дата выполнения</label>
+      <input
+        type="date"
+        id="dueDate"
+        name="dueDate"
+        class="form__input"
+      />
+    </div>
+  
+ 
+  
+    <button
+      type="submit"
+      class="w-full px-4 py-2 bg-blue-600 text-white font-bold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+    >
+      Создать задачу
+    </button>
+  </form>
+</div>
+</Layout>
+
+<style>
+    .form__input {
+        @apply mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500;
+    }
+</style>
