@@ -29,18 +29,18 @@ const { data, error } = await Astro.callAction(actions.getTasks,null);
 
 <Layout title="Tasks List">
   
-  <main>
-    <div class="max-w-4xl mx-auto py-8">
+  
+    <div class=" mx-auto py-8  w-full">
       <h1>Список задач</h1>
     
       <div>{error}</div>
-      <div class="flex w-full justify-end mt-3"><a href={`/tasks/new`} class="btn btn-green mb-3   text-center" > + Добавить </a></div>
+      <div class="flex w-full justify-end mt-3"><a href={`/tasks/new`} class="btn btn-primary mb-3   text-center" > + Добавить </a></div>
       
       <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
         <TaskList tasks={data} client:only="svelte" />
       </div>
     </div>
-  </main>
+  
 </Layout>
 
  

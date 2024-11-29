@@ -19,18 +19,19 @@
   
         <!-- Десктопное меню -->
         <div class="hidden md:flex space-x-4 justify-center flex-grow">
+
           <a
-            href="/tasks/new"
-            class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-200"
-          >
-            Добавить
-          </a>
-          <a
-            href="/tasks"
+            href="/"
             class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-200"
           >
             Список
           </a>
+          <a
+          href="/tasks/new"
+          class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-200"
+        >
+          + Добавить
+        </a>
         </div>
 
         <!-- Иконка меню -->

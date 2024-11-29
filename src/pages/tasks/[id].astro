@@ -1,6 +1,9 @@
 ---
 import { actions } from 'astro:actions';
 import Layout from "../../layouts/Layout.astro";
+import ButtonDelete from '../../components/tasks/ButtonDelete.svelte';
+import ButtonUpdate from '../../components/tasks/ButtonUpdate.svelte';
+    
 
 const {  id } = Astro.params;
 const { data, error } = await Astro.callAction(actions.getTaskById,{id});
@@ -26,34 +29,47 @@ const statusColors : { [key: string]: string } = {
 };
 
 ---
-<Layout title={`Task id:${id}`} >
+<Layout title={`Задача id:${id}`} >
 
- <div class="max-w-lg mx-auto bg-white   rounded-lg shadow-md">
-    <div class="p-4 border border-gray-300 rounded-lg shadow-md bg-white"> 
-    <h1> Задача: {id}</h1>
+ <div class="flex flex-col  p-4 border border-gray-300 rounded-lg shadow-md w-full">
+ 
+     
     {error && (
         <p class="error">{error}</p>
       )}
 {data && (
 
-  <h2 class="text-lg font-bold mb-2">{data?.title}</h2>
-  <p class="text-sm text-gray-600 mb-4">{data?.description || 'Нет описания'}</p>
+  <h1 >{data?.title}</h1>
+  <div class="text__description">{data?.description || 'Нет описания'}</div>
   
-  <div class="flex items-center justify-between mb-2">
+ 
 
-  </div>
-
-  <div class="text-sm text-gray-500">
+  <div class="text-sm text-gray-500 w-full">
     <p class={`text-sm font-medium  ${priorityColors[data.priority]}`}>
       Приоритет: {data?.priority}
     </p>
     <p class={`text-sm font-medium ${statusColors[data.status]}`}>
       Статус: {data?.status}
     </p>
-    <p><strong>Срок:</strong> {formatDate(data?.dueDate)}</p>
+    <hr class="mt-5 mb-5">
     <p><strong>Создано:</strong> {formatDate(data?.createdAt)}</p>
     <p><strong>Обновлено:</strong> {formatDate(data?.updatedAt)}</p>
-  </div>
+    <hr class="mt-5 mb-5">
+    <p><strong>id:</strong> {data?.id}</p>
+    <p><strong>Срок:</strong> {formatDate(data?.dueDate)}</p>
+    <p><strong>userId:</strong> {data?.userId}</p>
 
-)}</div></div>
+  </div>
+  <div class="flex w-full justify-between mt-3">
+              <ButtonDelete id={id}    />
+              <ButtonUpdate id={id}   />
+   </div>
+   <hr class="mt-3 mb-3">
+            <div class="flex justify-between space-x-5 text__sm  text__small">
+              <div class="text__small" >id: {data.id}</div>
+              <div> Создана: <span class="font-semibold">{ formatDate(data.createdAt) }</span></div>
+              <div> Обновлена: <span class="font-semibold">{ formatDate(data.updatedAt) }</span></div>
+            </div>
+)} </div>
 </Layout>
+

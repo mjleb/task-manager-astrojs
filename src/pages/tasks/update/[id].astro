@@ -9,6 +9,7 @@ const result = Astro.getActionResult(actions.updateTaskById);
 
 ---
 <Layout title="Редактирование задачи">
+  <h1>Редактирование задачи</h1>
 {result?.error && (
   <p class="error">Не удалось обновить задачу. Попробуйте позже.</p>
 )}
@@ -20,7 +21,7 @@ const result = Astro.getActionResult(actions.updateTaskById);
   method="POST" 
   action={actions.updateTaskById}
 >
-  <h1 class="text-2xl font-bold text-center mb-6">Редактирование задачи</h1>
+  
 
   <!-- ID задачи (скрытое поле) -->
   <input type="hidden" name="id" value={id} />
