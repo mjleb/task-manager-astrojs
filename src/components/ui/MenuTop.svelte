@@ -12,11 +12,15 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Логотип -->
+        <a
+        href="/">
         <div class="flex flex-col items-start w-auto">
+          
           <span class="text-xl font-bold text-gray-900">ToDo DEMO</span>
           <span class="text-sm text-gray-500">Astro js</span>
+        
         </div>
-  
+      </a>
         <!-- Десктопное меню -->
         <div class="hidden md:flex space-x-4 justify-center flex-grow">
 

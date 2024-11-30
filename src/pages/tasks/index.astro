@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { actions } from 'astro:actions';
+import TaskList from '../../components/tasks/TaskList.svelte';
+import ButtonAdd from '../../components/tasks/ButtonAdd.svelte';
+import Alert from '../../components/ui/Alert.svelte';
+
+const { data, error } = await Astro.callAction(actions.getTasks, null);
+---
+
+<Layout title="Tasks List">
+  <div class="mx-auto w-full">
+    <h1>Список задач</h1>
+
+    {error && <Alert title="Ошибка" arrmsg={[error]} color="red" client:only="svelte" />}
+    <div class="flex w-full justify-end mt-3"><ButtonAdd /></div>
+
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+      <TaskList tasks={data} client:only="svelte" />
+    </div>
+  </div>
+</Layout>

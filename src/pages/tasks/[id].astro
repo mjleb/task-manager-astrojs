@@ -3,73 +3,51 @@ import { actions } from 'astro:actions';
 import Layout from "../../layouts/Layout.astro";
 import ButtonDelete from '../../components/tasks/ButtonDelete.svelte';
 import ButtonUpdate from '../../components/tasks/ButtonUpdate.svelte';
-    
+import TaskPriority from '../../components/tasks/TaskPriority.svelte';
+import TaskStatus from '../../components/tasks/TaskStatus.svelte';
+import TaskDate from '../../components/tasks/TaskDate.svelte';
+import Alert from '../../components/ui/Alert.svelte';
 
-const {  id } = Astro.params;
+
+const { id } = Astro.params;
 const { data, error } = await Astro.callAction(actions.getTaskById,{id});
-/*
-if (!itemExists(id)) {
-  return Astro.rewrite("/404")
+ 
+if (error) {
+  return Astro.rewrite("/404");
 }
-  */
-     // Функция для форматирования даты
-const formatDate = (date: Date | null | undefined) =>
-  date ? new Intl.DateTimeFormat('default', { dateStyle: 'medium' }).format(new Date(date)) : 'N/A';
-
-const priorityColors: { [key: string]: string }  = {
-  low: '  text-green-800',
-  medium: '  text-yellow-800',
-  high: '  text-red-800',
-};
-
-const statusColors : { [key: string]: string } = {
-  new: 'text-blue-600',
-  'in-progress': 'text-yellow-600',
-  completed: 'text-green-600',
-};
-
+ 
 ---
-<Layout title={`Задача id:${id}`} >
-
- <div class="flex flex-col  p-4 border border-gray-300 rounded-lg shadow-md w-full">
- 
-     
+<Layout title={`Задача id:${id}`}>
+  <div class="w-full">
+    <h1>Задача</h1> 
+  <div class="flex flex-col box ">
+    
     {error && (
-        <p class="error">{error}</p>
-      )}
-{data && (
+      <Alert title="Ошибка" arrmsg={[error]} color="red" client:only="svelte" />
+    )}
+    {data && (
+    <h2>{data?.title}</h2>
+    <div class="flex justify-start space-x-5  text__small">
+      <TaskPriority text={data?.priority} />
+      <TaskStatus text={data?.status} />
+      <TaskDate text="Срок" date={data?.dueDate} />
+    </div>
 
-  <h1 >{data?.title}</h1>
-  <div class="text__description">{data?.description || 'Нет описания'}</div>
-  
- 
+    <div class="text__description mt-8 rounded-lg bg-gray-50 p-5">{data?.description || 'Нет описания'}</div>
 
-  <div class="text-sm text-gray-500 w-full">
-    <p class={`text-sm font-medium  ${priorityColors[data.priority]}`}>
-      Приоритет: {data?.priority}
-    </p>
-    <p class={`text-sm font-medium ${statusColors[data.status]}`}>
-      Статус: {data?.status}
-    </p>
-    <hr class="mt-5 mb-5">
-    <p><strong>Создано:</strong> {formatDate(data?.createdAt)}</p>
-    <p><strong>Обновлено:</strong> {formatDate(data?.updatedAt)}</p>
-    <hr class="mt-5 mb-5">
-    <p><strong>id:</strong> {data?.id}</p>
-    <p><strong>Срок:</strong> {formatDate(data?.dueDate)}</p>
-    <p><strong>userId:</strong> {data?.userId}</p>
-
+    <hr class="mt-3 mb-3">
+    <div class="flex justify-between space-x-5 text__sm  text__small">
+      <div class="text__small"><span class="font-semibold">id</span>: {data.id}</div>
+      <TaskDate text="Создана" date={data.createdAt} />
+      <TaskDate text="Обновлена" date={data.updatedAt} />
+    </div>
+    <div class="flex justify-between space-x-5 text__sm  text__small">
+      <div> <span class="font-semibold">userId</span>: {data?.userId } </div>
+    </div>
+    <div class="flex w-full justify-between mt-10">
+      <ButtonDelete id={id} />
+      <ButtonUpdate id={id} />
+    </div>
+    )}
   </div>
-  <div class="flex w-full justify-between mt-3">
-              <ButtonDelete id={id}    />
-              <ButtonUpdate id={id}   />
-   </div>
-   <hr class="mt-3 mb-3">
-            <div class="flex justify-between space-x-5 text__sm  text__small">
-              <div class="text__small" >id: {data.id}</div>
-              <div> Создана: <span class="font-semibold">{ formatDate(data.createdAt) }</span></div>
-              <div> Обновлена: <span class="font-semibold">{ formatDate(data.updatedAt) }</span></div>
-            </div>
-)} </div>
 </Layout>
-
