@@ -3206,10 +3206,10 @@ eslint@^9.15.0:
     natural-compare "^1.4.0"
     optionator "^0.9.3"
 
-esm-env@^1.0.0:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/esm-env/-/esm-env-1.1.4.tgz#340c78b03ee2298d31c5b9fab9793468ede828b0"
-  integrity sha512-oO82nKPHKkzIj/hbtuDYy/JHqBHFlMIW36SDiPCVsj87ntDLcWN+sJ1erdVryd4NxODacFTsdrIE3b7IamqbOg==
+esm-env@^1.2.0:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/esm-env/-/esm-env-1.2.1.tgz#34c2a0ba60582948afbe7bd779bc66f9d3aece7e"
+  integrity sha512-U9JedYYjCnadUlXk7e1Kr+aENQhtUaoaV9+gZm1T8LC/YBAPJx3NSPIAurFOC0U5vrdSevnUJS2/wUVxGwPhng==
 
 espree@^10.0.0, espree@^10.0.1, espree@^10.3.0:
   version "10.3.0"
@@ -6154,6 +6154,11 @@ prettier-plugin-astro@^0.14.1:
     prettier "^3.0.0"
     sass-formatter "^0.7.6"
 
+prettier-plugin-svelte@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-svelte/-/prettier-plugin-svelte-3.3.2.tgz#f0c0b023a697f5cb43fb7257170e3d8762b547c6"
+  integrity sha512-kRPjH8wSj2iu+dO+XaUv4vD8qr5mdDmlak3IT/7AOgGIMRG86z/EHOLauFcClKEnOUf4A4nOA7sre5KrJD4Raw==
+
 prettier@2.8.7:
   version "2.8.7"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.7.tgz#bb79fc8729308549d28fe3a98fce73d2c0656450"
@@ -7031,9 +7036,9 @@ svelte2tsx@^0.7.22:
     pascal-case "^3.1.1"
 
 svelte@^5.1.16:
-  version "5.2.8"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-5.2.8.tgz#1a7834f118eadef10df0eae851aad090e1d6730e"
-  integrity sha512-VU7a01XwnFi6wXVkH5QY3FYXRZWrhsWZhaE8AYU6UeYZdslE3TFgQq6+HLrbMjOLkVhdKt74NGHYbhFeErQQ6g==
+  version "5.2.10"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-5.2.10.tgz#d35399550de09e86f5344fe8e221c667bbbac68e"
+  integrity sha512-ON0OyO7vOmSjTc9mLjusu3vf1I7BvjovbiRB7j84F1WZMXV6dR+Tj4btIzxQxMHfzbGskaFmRa7qjgmBSVBnhQ==
   dependencies:
     "@ampproject/remapping" "^2.3.0"
     "@jridgewell/sourcemap-codec" "^1.5.0"
@@ -7042,7 +7047,7 @@ svelte@^5.1.16:
     acorn-typescript "^1.4.13"
     aria-query "^5.3.1"
     axobject-query "^4.1.0"
-    esm-env "^1.0.0"
+    esm-env "^1.2.0"
     esrap "^1.2.2"
     is-reference "^3.0.3"
     locate-character "^3.0.0"

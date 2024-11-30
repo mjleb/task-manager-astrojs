@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import MenuTop from '../components/ui/MenuTop.svelte';
+import Footer from '../components/ui/Footer.svelte';
+
 interface Props {
 	title: string;
 }
@@ -18,24 +21,21 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
+		<div class="flex flex-col min-h-screen bg-gray-100">
+			<MenuTop client:only="svelte"  />
+			<main class=" flex flex-grow overflow-auto  justify-center   ">
 		       <slot />
+			</main>
+			<Footer  client:only="svelte"  />
+		</div> 
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
+ 
 	html {
 		font-family: system-ui, sans-serif;
 		background: #fff;
+		font-size: 16px;
 	}
 	code {
 		font-family:

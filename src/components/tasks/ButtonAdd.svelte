@@ -1,0 +1,1 @@
+<a href={`/tasks/new`} class="btn btn-primary "> + Добавить </a>
