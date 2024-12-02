@@ -1,0 +1,15 @@
+---
+import Layout from "../layouts/Layout.astro";
+interface Props {
+    error: unknown
+}
+
+const { error } = Astro.props
+---
+
+<div></div>
+<Layout title="Error 404">
+    <div class="flex   p-4 border  rounded-lg shadow-md w-full text-center items-center h-100  ">
+        <div class="text-5xl w-full">{error instanceof Error ? error.message : 'Unknown error'}</div>
+    </div>
+</Layout>

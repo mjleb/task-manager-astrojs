@@ -1,0 +1,45 @@
+---
+import { actions } from 'astro:actions';
+import Layout from '../../../layouts/Layout.astro';
+import Alert from '../../../components/ui/Alert.svelte';
+
+const result = Astro.getActionResult(actions.createTask);
+---
+
+<Layout title="Создание задачи">
+  <div class="w-full">
+    <h1>Создание задачи</h1>
+    <div class="box">
+      {result?.error && <Alert title="Ошибка" arrmsg={[result?.error]} color="red" client:only="svelte" />}
+      {result && !result.error && <Alert title="Успешно" arrmsg={['Задача успешно добавлена', `id: {result?.data.id} {result?.data.title}`]} color="green" client:only="svelte" />}
+      <form method="POST" action={actions.createTask}>
+        <div class="mb-4">
+          <label for="title">Название задачи</label>
+          <input type="text" id="title" name="title" class="form__input" required />
+        </div>
+
+        <div class="mb-4">
+          <label for="description">Описание</label>
+          <textarea id="description" name="description" rows="3" class="form__input"></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label for="priority">Приоритет</label>
+          <select id="priority" name="priority" class="form__input" required>
+            <option value="low">Низкий</option>
+            <option value="medium">Средний</option>
+            <option value="high">Высокий</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="dueDate">Дата выполнения</label>
+          <input type="date" id="dueDate" name="dueDate" class="form__input" />
+        </div>
+        <div class="flex justify-end">
+          <button type="submit" class="btn btn-primary float-right mt-10"> Создать задачу </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</Layout>

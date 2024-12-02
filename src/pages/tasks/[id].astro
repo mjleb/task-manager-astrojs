@@ -1,0 +1,55 @@
+---
+import { actions } from 'astro:actions';
+import Layout from "../../layouts/Layout.astro";
+import ButtonDelete from '../../components/tasks/ButtonDelete.svelte';
+import ButtonUpdate from '../../components/tasks/ButtonUpdate.svelte';
+import TaskPriority from '../../components/tasks/TaskPriority.svelte';
+import TaskStatus from '../../components/tasks/TaskStatus.svelte';
+import TaskDate from '../../components/tasks/TaskDate.svelte';
+import Alert from '../../components/ui/Alert.svelte';
+
+
+const { id } = Astro.params;
+const formData = new FormData();
+formData.append('id', id);
+const { data, error } = await Astro.callAction(actions.getTaskById,formData);
+ 
+if (error) {
+  return Astro.rewrite("/404");
+}
+ 
+---
+<Layout title={`Задача id:${id}`}>
+  <div class="w-full">
+    <h1>Задача</h1> 
+  <div class="flex flex-col box ">
+    
+    {error && (
+      <Alert title="Ошибка" arrmsg={[error]} color="red" client:only="svelte" />
+    )}
+    {data && (
+    <h2>{data?.title}</h2>
+    <div class="flex justify-start space-x-5  text__small">
+      <TaskPriority text={data?.priority} />
+      <TaskStatus text={data?.status} />
+      <TaskDate text="Срок" date={data?.dueDate} />
+    </div>
+
+    <div class="text__description mt-8 rounded-lg bg-gray-50 p-5">{data?.description || 'Нет описания'}</div>
+
+    <hr class="mt-3 mb-3">
+    <div class="flex justify-between space-x-5 text__sm  text__small">
+      <div class="text__small"><span class="font-semibold">id</span>: {data.id}</div>
+      <TaskDate text="Создана" date={data.createdAt} />
+      <TaskDate text="Обновлена" date={data.updatedAt} />
+    </div>
+    <div class="flex justify-between space-x-5 text__sm  text__small">
+      <div> <span class="font-semibold">userId</span>: {data?.userId } </div>
+    </div>
+    <div class="flex w-full justify-between mt-10">
+      <ButtonDelete id={id} />
+      <ButtonUpdate id={id} />
+    </div>
+    )}
+  </div>
+</Layout>
