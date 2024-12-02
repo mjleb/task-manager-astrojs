@@ -4,7 +4,9 @@ import Layout from '../../../layouts/Layout.astro';
 import Alert from '../../../components/ui/Alert.svelte';
 
 const { id } = Astro.params;
-const { data, error } = await Astro.callAction(actions.getTaskById, { id });
+const formData = new FormData();
+formData.append('id', id);
+const { data } = await Astro.callAction(actions.getTaskById, formData);
 const result = Astro.getActionResult(actions.updateTaskById);
 ---
 
