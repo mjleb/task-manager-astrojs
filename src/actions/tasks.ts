@@ -69,10 +69,11 @@ export const createTask = defineAction({
 });
 
 export const getTaskById = defineAction({
+  accept: 'form',
   input: z.object({
     id: z.string(),
   }),
-  handler: async (input: { id: string }, { cookies }: { cookies: AstroCookies }) => {
+  handler: async (input, { cookies }: { cookies: AstroCookies }) => {
     const userId = checkCookie(cookies);
 
     const task = await prisma.task.findUnique({
