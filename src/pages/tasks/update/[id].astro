@@ -15,7 +15,7 @@ const result = Astro.getActionResult(actions.updateTaskById);
     <h1>Редактирование задачи</h1>
     <div class="box">
       {result?.error && <Alert title="Ошибка" arrmsg={[result?.error]} color="red" client:only="svelte" />}
-      {result && !result.error && <Alert title="Успешно" arrmsg={['Задача успешно обновлена', `id: {result?.data.id} {result?.data.title}`]} color="green" client:only="svelte" />}
+      {result && !result.error && <Alert title="Успешно" arrmsg={['Задача успешно обновлена', `id: ${result?.data.id}`, `Название: ${result?.data.title}`]} color="green" client:only="svelte" />}
 
       <form method="POST" action={actions.updateTaskById}>
         <!-- ID задачи (скрытое поле) -->
