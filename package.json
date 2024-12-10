@@ -17,6 +17,8 @@
     "@astrojs/node": "^8.3.4",
     "@prisma/client": "^6.0.0",
     "astro": "^4.16.15",
+    "dotenv": "^16.4.7",
+    "openai": "^4.76.1",
     "prisma": "^5.22.0",
     "sqlite3": "^5.1.7",
     "typescript": "^5.7.2",

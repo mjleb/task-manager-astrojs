@@ -2,8 +2,11 @@
 import { actions } from 'astro:actions';
 import Layout from '../../../layouts/Layout.astro';
 import Alert from '../../../components/ui/Alert.svelte';
+import GenerateDescriptionButton from '../../../components/tasks/GenerateDescriptionButton.svelte';
 
 const result = Astro.getActionResult(actions.createTask);
+
+
 ---
 
 <Layout title="Создание задачи">
@@ -12,6 +15,7 @@ const result = Astro.getActionResult(actions.createTask);
     <div class="box">
       {result?.error && <Alert title="Ошибка" arrmsg={[result?.error]} color="red" client:only="svelte" />}
       {result && !result.error && <Alert title="Успешно" arrmsg={['Задача успешно добавлена', `id: {result?.data.id} {result?.data.title}`]} color="green" client:only="svelte" />}
+      
       <form method="POST" action={actions.createTask}>
         <div class="mb-4">
           <label for="title">Название задачи</label>
@@ -19,8 +23,14 @@ const result = Astro.getActionResult(actions.createTask);
         </div>
 
         <div class="mb-4">
-          <label for="description">Описание</label>
-          <textarea id="description" name="description" rows="3" class="form__input"></textarea>
+          <div class="flex justify-between">
+            <label for="description">Описание</label>
+            
+            <GenerateDescriptionButton client:only="svelte"/>
+          </div>
+          
+          <textarea id="description" name="description" rows="3" class="form__input"> </textarea>
+          
         </div>
 
         <div class="mb-4">
@@ -42,4 +52,6 @@ const result = Astro.getActionResult(actions.createTask);
       </form>
     </div>
   </div>
+  
 </Layout>
+ 
