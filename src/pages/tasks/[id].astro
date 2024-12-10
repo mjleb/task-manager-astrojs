@@ -10,7 +10,9 @@ import Alert from '../../components/ui/Alert.svelte';
 
 
 const { id } = Astro.params;
-const { data, error } = await Astro.callAction(actions.getTaskById,{id});
+const formData = new FormData();
+formData.append('id', id);
+const { data, error } = await Astro.callAction(actions.getTaskById,formData);
  
 if (error) {
   return Astro.rewrite("/404");
