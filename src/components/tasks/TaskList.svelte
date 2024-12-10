@@ -8,11 +8,35 @@
   import TaskPriority from './TaskPriority.svelte';
   import TaskStatus from './TaskStatus.svelte';
   import TaskDate from './TaskDate.svelte';
+  import Alert from '../ui/Alert.svelte';
   
 
   export let tasks: any[];
 
   let error = null;
+
+  // Переменные для фильтров
+  let selectedPriority: string = 'all'; // Возможные значения: 'all', 'high', 'medium', 'low'
+  let selectedStatus: string = 'all';   // Возможные значения: 'all', 'completed', 'active'
+
+    // Отфильтрованные задачи
+    let filteredTasks = tasks;
+
+      // Функция фильтрации задач
+  function filterTasks() {
+    filteredTasks = tasks.filter((task) => {
+      const matchesPriority =
+        selectedPriority === 'all' || task.priority === selectedPriority;
+      const matchesStatus =
+        selectedStatus === 'all' ||
+        (selectedStatus === 'completed' && task.status === 'completed') ||
+        (selectedStatus === 'active' && task.status !== 'completed');
+      return matchesPriority && matchesStatus;
+    });
+  }
+
+  // Отслеживаем изменения tasks, чтобы обновлять фильтр
+  $: filterTasks();
 
   onMount(() => {
     console.log('Компонент TaskList загружен');
@@ -28,12 +52,38 @@
 </script>
 
 <div class=" grid grid-cols-1 md:grid-cols-1 gap-3 ">
-  {#if tasks && tasks.length === 0 && !error}
+  {#if error}
+    <Alert title="Ошибка" arrmsg={[error]} color="red" />
+  {/if}
+
+    <!-- Фильтры -->
+    <div class="filters mb-4 flex justify-start">
+      <div class="filter-group w-1/2">
+        <label for="priority-filter" class="ml-4">Приоритет</label>
+  
+      <select bind:value={selectedPriority} on:change={filterTasks} class="form__input">
+        <option value="all">Все приоритеты</option>
+        <option value="high">Высокий</option>
+        <option value="medium">Средний</option>
+        <option value="low">Низкий</option>
+      </select>
+      </div>
+      <div class="filter-group w-1/2 ml-5">
+        <label for="priority-filter" class=" ml-4">Стутус</label>
+      <select bind:value={selectedStatus} on:change={filterTasks} class="form__input  ">
+        <option value="all">Все статусы</option>
+        <option value="completed">Выполненные</option>
+        <option value="active">Активные</option>
+      </select>
+      </div>
+    </div>
+
+  {#if filteredTasks.length === 0 && !error}
     <div class="text-center text-gray-500">Задачи отсутствуют</div>
   {/if}
 
-  {#each tasks as task (task.id)}
-    <div  class="task-item">
+  {#each filteredTasks as task (task.id)}
+    <div key={task.id} class="task-item">
       <a href={`/tasks/${task.id}`}>
         <div class="float-end">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class=" size-2 text-purple-400 w-6 h-6 ml-2">

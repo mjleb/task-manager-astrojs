@@ -26,6 +26,7 @@
     "@astrojs/node": "^8.3.4",
     "@astrojs/svelte": "^6.0.2",
     "@astrojs/tailwind": "^5.1.2",
+    "@types/eslint-config-prettier": "^6.11.3",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.0",
     "@vitest/ui": "^2.1.6",
