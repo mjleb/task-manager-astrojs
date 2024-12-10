@@ -3,12 +3,8 @@ import { AstroCookies } from 'astro';
 import { defineAction } from 'astro:actions';
 import { type ActionAPIContext } from 'astro:actions';
 import { z } from 'zod';
-import { type TaskInput, TaskUpdate } from '../utils/types';
+import { type TaskUpdate } from '../utils/types';
 import prisma from '../prisma';
-
-interface Action {
-  handler: (input: any, context: any) => Promise<any>;
-}
 
 const checkCookie = (cookies: AstroCookies): string | null => {
   // Чтение userId из cookies
@@ -73,14 +69,15 @@ export const createTask = defineAction({
 });
 
 export const getTaskById = defineAction({
+  accept: 'form',
   input: z.object({
     id: z.string(),
   }),
-  handler: async (input: { id: string }, { cookies }: { cookies: AstroCookies }) => {
+  handler: async (input, { cookies }: { cookies: AstroCookies }) => {
     const userId = checkCookie(cookies);
 
     const task = await prisma.task.findUnique({
-      where: { id: input.id },
+      where: { id: input.id, userId: userId },
     });
     return task;
   },
@@ -93,7 +90,7 @@ export const updateTaskById = defineAction({
     const userId = checkCookie(cookies);
 
     const updatedTask = await prisma.task.update({
-      where: { id: input.id },
+      where: { id: input.id, userId: userId },
       data: {
         title: input.title || undefined,
         description: input.description || undefined,
@@ -120,7 +117,7 @@ export const deleteTaskById = defineAction({
     }
 
     const deletedTask = await prisma.task.delete({
-      where: { id: input.id },
+      where: { id: input.id, userId: userId },
     });
     return { success: true, data: deletedTask };
   },
