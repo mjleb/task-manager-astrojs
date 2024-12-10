@@ -28,16 +28,12 @@
 </script>
 
 <div class=" grid grid-cols-1 md:grid-cols-1 gap-3 ">
-  {#if error}
-    <Alert title="Ошибка" arrmsg={[error]} color="red" />
-  {/if}
-
-  {#if tasks.length === 0 && !error}
+  {#if tasks && tasks.length === 0 && !error}
     <div class="text-center text-gray-500">Задачи отсутствуют</div>
   {/if}
 
   {#each tasks as task (task.id)}
-    <div key={task.id} class="task-item">
+    <div  class="task-item">
       <a href={`/tasks/${task.id}`}>
         <div class="float-end">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class=" size-2 text-purple-400 w-6 h-6 ml-2">
